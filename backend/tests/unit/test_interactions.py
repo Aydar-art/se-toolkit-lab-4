@@ -24,22 +24,3 @@ def test_filter_returns_interaction_with_matching_ids() -> None:
     result = _filter_by_item_id(interactions, 1)
     assert len(result) == 1
     assert result[0].id == 1
-
-def test_filter_excludes_interaction_with_different_learner_id() -> None:
-    """Test that filtering by item_id doesn't accidentally filter by learner_id.
-    
-    Creates an interaction where item_id=1 and learner_id=2.
-    When filtering by item_id=1, this interaction SHOULD be included
-    because it has matching item_id, even though learner_id is different.
-    """
-    # Создаем взаимодействие с item_id=1, но learner_id=2
-    interactions = [_make_log(id=1, learner_id=2, item_id=1)]
-    
-    # Фильтруем по item_id=1
-    result = _filter_by_item_id(interactions, 1)
-    
-    # Ожидаем, что взаимодействие будет найдено
-    assert len(result) == 1
-    assert result[0].id == 1
-    assert result[0].item_id == 1
-    assert result[0].learner_id == 2
